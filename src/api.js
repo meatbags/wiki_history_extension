@@ -10,27 +10,30 @@ class API {
     };
   }
 
-  getRevisionMeta(hostname, title, handler, rvcontinue) {
+  init(title, hostname) {
+    this.title = title;
     this.hostname = hostname;
-    this.url = {
-      endpoint: `https://${this.hostname}/w/api.php`,
-      base: `https://${this.hostname}/wiki/`,
-    };
-    const req = [
-      this.url.endpoint,
+    this.endpoint = `https://${this.hostname}/w/api.php`;
+
+    // build request string
+    this.requestString = [
+      this.endpoint,
       this.query.action,
-      `&titles=${title.replace(/ /g, '%20')}`,
+      `&titles=${this.title.replace(/ /g, '%20')}`,
       this.query.request,
       this.query.limit,
-      this.query.format,
-      rvcontinue || ''
+      this.query.format
     ].join('');
+  }
+
+  getRevisionMeta(handler, rvcontinue) {
+    const req = this.requestString + (rvcontinue ? `&rvcontinue=${rvcontinue}` : '');
+    const xhr = new XMLHttpRequest();
 
     // log request
     console.log(req);
-    
+
     // send to api
-    const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = handler;
     xhr.open('GET', req, true);
     xhr.send();

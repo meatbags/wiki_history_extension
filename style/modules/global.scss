@@ -9,28 +9,36 @@ div {
 body, html {
   margin: 0;
   padding: 0;
+  color: $colour;
 }
 
-body {
-}
+body {}
 
 .wrapper {
   padding: $space;
 
   .wrapper__inner {
-    padding: $space;
+    display: flex;
+    flex-direction: column;
+    width: $width;
+    text-align: right;
 
-    .wrapper-header {
+    .header {
       white-space: nowrap;
+      font-weight: bold;
     }
 
-    .wrapper-content {
-      display: flex;
-      flex-direction: column;
+    .graph {
+      width: 100%;
+      height: $height;
 
-      .item {
-        width: 100%;
+      .graph__inner {
+        
       }
+    }
+
+    .calendar {
+      width: 100%;
     }
   }
 }

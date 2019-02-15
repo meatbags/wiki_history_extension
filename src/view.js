@@ -1,19 +1,25 @@
 /** Data visualiser. */
 
 class View {
-  constructor() {}
+  constructor() {
+    this.el = {
+      header: document.querySelector('.header'),
+      graph: document.querySelector('.graph'),
+      calendar: document.querySelector('.calendar'),
+    }
+  }
 
   reset() {
     // clear everything
   }
 
   setTitle(title) {
-    document.querySelector('.wrapper-header').innerHTML = title;
+    this.el.header.innerHTML = title;
   }
 
   parseRevisionData(data) {
     return new Promise((resolve, reject) => {
-      const target = document.querySelector('.wrapper-content');
+      const target = document.querySelector('.graph');
       const revisions = data.query.pages[0].revisions;
       revisions.forEach(rev => {
         const el = document.createElement('div');

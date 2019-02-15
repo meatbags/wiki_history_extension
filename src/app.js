@@ -7,47 +7,40 @@ class App {
   constructor() {
     this.api = new API();
     this.view = new View();
-    this.getData();
+    this.checkStorage();
 
-    // manual
+    // manual refresh
     const button = document.querySelector('#refresh');
     if (button) {
       button.addEventListener('click', () => {
-        this.view.reset();
+        // this.view.reset();
       })
     }
   }
 
-  getData() {
-    if (!this.locked) {
-      this.locked = true;
-      chrome.storage.sync.get(null, res => {
-        if (res.title && res.hostname) {
-          // log
-          this.view.setTitle(res.title);
-
-          // get api data
-          this.api.getRevisionMeta(res.hostname, res.title, evt => {
-            this.handleRevisionData(evt);
-          });
-        } else {
-          this.locked = false;
-        }
-      });
-    }
+  checkStorage() {
+    chrome.storage.sync.get(null, res => {
+      if (res.title && res.hostname) {
+        this.api.init(res.title, res.hostname);
+        this.view.setTitle(res.title);
+        this.api.getRevisionMeta(evt => { this.onRevisionMeta(evt); }, false);
+      } else {
+        // get data from storage
+      }
+    });
   }
 
-  handleRevisionData(evt) {
+  onRevisionMeta(evt) {
     if (evt.currentTarget && evt.currentTarget.readyState == 4) {
-      const responseText = evt.currentTarget.responseText;
-      const json = JSON.parse(responseText);
-      this.view.parseRevisionData(json).then(() => {
-        if (json.continue && json.continue.rvcontinue) {
-          console.log(json.continue);
+      // parse data and continue
+      const res = JSON.parse(evt.currentTarget.responseText);
+      this.view.parseRevisionData(res).then(() => {
+        if (res.continue && res.continue.rvcontinue) {
+          console.log(res.continue);
         }
       });
     } else {
-      console.log('Request failed:', evt);
+      console.log('Ready state:', evt.currentTarget.readyState);
     }
   }
 }

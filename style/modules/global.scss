@@ -2,7 +2,35 @@ div, * {
   box-sizing: border-box;
 }
 
+div {
+  outline: 1px solid rgba(0, 0, 0, 0.125);
+}
+
 body, html {
   margin: 0;
   padding: 0;
+}
+
+body {
+}
+
+.wrapper {
+  padding: $space;
+
+  .wrapper__inner {
+    padding: $space;
+
+    .wrapper-header {
+      white-space: nowrap;
+    }
+
+    .wrapper-content {
+      display: flex;
+      flex-direction: column;
+
+      .item {
+        width: 100%;
+      }
+    }
+  }
 }

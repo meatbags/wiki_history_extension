@@ -1,15 +1,22 @@
 {
-  "name": "Getting Started Example",
+  "name": "Wiki History",
   "version": "1.0",
-  "description": "Build an Extension!",
+  "description": "Wikipedia meta tool.",
   "permissions": [
+    "activeTab",
     "declarativeContent",
-    "https://*.wikipedia.org/"
+    "https://*.wikipedia.org/",
+    "storage"
   ],
   "background": {
-    "scripts": ["dist/background.js"],
+    "scripts": ["background.js"],
     "persistent": false
   },
+  "content_scripts": [{
+    "matches": ["https://*.wikipedia.org/*"],
+    "js": ["content.js"],
+    "run_at": "document_idle"
+  }],
   "page_action": {
     "default_popup": "index.html",
     "default_icon": {

@@ -21,6 +21,7 @@ module.exports = [{
       path: path.resolve(__dirname, pathOutput),
       filename: '[name].js'
     },
+    devtool: 'cheap-module-source-map',
     module: {
       rules: [{
         test: /\.js$/,
@@ -29,7 +30,7 @@ module.exports = [{
       }]
     },
     plugins: [
-      new BabelUglifyPlugin(undefined)
+      //new BabelUglifyPlugin(undefined)
     ],
     stats: {colors: true, warnings: false}
   },{

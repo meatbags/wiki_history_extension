@@ -1,7 +1,22 @@
 div, * {
   box-sizing: border-box; }
 
+div {
+  outline: 1px solid rgba(0, 0, 0, 0.125); }
+
 body, html {
   margin: 0;
   padding: 0; }
+
+.wrapper {
+  padding: 10px; }
+  .wrapper .wrapper__inner {
+    padding: 10px; }
+    .wrapper .wrapper__inner .wrapper-header {
+      white-space: nowrap; }
+    .wrapper .wrapper__inner .wrapper-content {
+      display: flex;
+      flex-direction: column; }
+      .wrapper .wrapper__inner .wrapper-content .item {
+        width: 100%; }
 

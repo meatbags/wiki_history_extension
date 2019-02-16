@@ -8,9 +8,17 @@
   <body>
     <div class='wrapper'>
       <div class='wrapper__inner'>
-        <div class='header'></div>
-        <div class='graph'></div>
-        <div class='calendar'></div>
+        <div id='title' class='header'></div>
+        <div id='graph-wrapper' class='graph-wrapper'>
+          <div class='graph-row'>
+            <div id='graph' class='graph'></div>
+            <div id='y-axis' class='graph-y-axis'></div>
+          </div>
+          <div class='graph-row'>
+            <div id='x-axis' class='graph-x-axis'></div>
+          </div>
+        </div>
+        <div id='calendar'></div>
       </div>
     </div>
   </body>

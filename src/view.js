@@ -1,34 +1,148 @@
 /** Data visualiser. */
 
+import Time from './time';
+
 class View {
   constructor() {
+    this.mouse = {x: 0, y: 0, ref: {x: 0, y: 0}, active: false};
     this.el = {
-      header: document.querySelector('.header'),
-      graph: document.querySelector('.graph'),
-      calendar: document.querySelector('.calendar'),
-    }
-  }
+      title: document.querySelector('#title'),
+      graph: document.querySelector('#graph'),
+      graphWrapper: document.querySelector('#graph-wrapper'),
+    };
 
-  reset() {
-    // clear everything
-  }
+    // storage
+    this.dataset = [];
+    this.maxVolume = 0;
 
-  setTitle(title) {
-    this.el.header.innerHTML = title;
+    // add column for current week
+    this.time = new Time();
+    const monday = this.time.getWeekStart().toISOString();
+    const el = this.createColumn(monday);
+    this.el.graph.appendChild(el);
+
+    // ui
+    this.el.graph.addEventListener('mousedown', e => { this.onMouseDown(e); });
+    this.el.graph.addEventListener('mousemove', e => { this.onMouseMove(e); });
+    this.el.graph.addEventListener('mouseup', e => { this.onMouseUp(e); });
+    this.el.graph.addEventListener('mouseleave', e => { this.onMouseUp(e); });
   }
 
   parseRevisionData(data) {
     return new Promise((resolve, reject) => {
-      const target = document.querySelector('.graph');
-      const revisions = data.query.pages[0].revisions;
-      revisions.forEach(rev => {
-        const el = document.createElement('div');
-        el.innerHTML = `${rev.user} - ${rev.timestamp}`;
-        el.classList.add('item');
-        target.appendChild(el);
-      });
+      this.addRevisions(data.query.pages[0].revisions);
       resolve();
     });
+  }
+
+  createColumn(timestamp) {
+    const el = document.createElement('div');
+    el.classList.add('column');
+    el.dataset.timestamp = timestamp;
+    el.dataset.volume = 0;
+    return el;
+  }
+
+  addMissingColumns(timestamp) {
+    // add missing weeks
+    const lastChild = this.el.graph.lastChild;
+    const weekStart = this.time.getWeekStart(timestamp);
+    const a = weekStart.getTime();
+    const b = new Date(lastChild.dataset.timestamp).getTime();
+    if (a < b) {
+      const dates = this.time.getWeeks(weekStart.toISOString(), lastChild.dataset.timestamp);
+
+      // add columns
+      for (let i=dates.length-1, lim=-1; i>lim; --i) {
+        const str = dates[i].toISOString();
+
+        // add element if it doesn't exist
+        if (!this.el.graph.querySelector(`[data-timestamp="${str}"]`)) {
+          const el = this.createColumn(str);
+          this.el.graph.appendChild(el);
+        }
+      }
+    }
+  }
+
+  incrementColumn(timestamp) {
+    const el = this.el.graph.querySelector(`[data-timestamp="${timestamp}"]`);
+    const val = parseInt(el.dataset.volume) + 1;
+    el.dataset.volume = val;
+    el.title = `${val}`;
+    return val;
+  }
+
+  addRevisions(revs) {
+    // store new data
+    const index = this.dataset.length;
+    this.dataset = this.dataset.concat(revs.map(el => {
+      return {
+        timestamp: el.timestamp,
+        user: el.user,
+      };
+    }))
+
+    // parse new data
+    for (let i=index, len=this.dataset.length; i<len; ++i) {
+      // get week start
+      const item = this.dataset[i];
+      const str = this.time.getWeekStart(item.timestamp).toISOString();
+
+      // add missing elements
+      if (!this.el.graph.querySelector(`[data-timestamp="${str}"]`)) {
+        this.addMissingColumns(str);
+      }
+
+      // increment and check max
+      this.maxVolume = Math.max(this.maxVolume, this.incrementColumn(str));
+    }
+
+    // normalise data
+    if (this.maxVolume != 0) {
+      this.el.graph.querySelectorAll('.column').forEach(el => {
+        const height = parseInt(el.dataset.volume) / this.maxVolume;
+        el.style.height = `${height * 100}%`;
+      });
+    }
+  }
+
+  onMouseDown(e) {
+    this.mouse.active = true;
+
+    // set start positions
+    this.mouse.ref.x = e.clientX;
+    this.mouse.ref.y = e.clientY;
+    this.scrollRef = this.el.graph.scrollLeft;
+    this.scrollMax = this.el.graph.scrollWidth - this.el.graph.clientWidth;
+  }
+
+  onMouseMove(e) {
+    // calculate mouse delta and pan graph
+    if (this.mouse.active) {
+      this.mouse.x = e.clientX;
+      this.mouse.y = e.clientY;
+      const dx = this.mouse.x - this.mouse.ref.x;
+      let next = this.scrollRef - dx;
+
+      // limit scrolling & reset delta origin
+      if (next > this.scrollMax || next < 0) {
+        next = Math.max(0, Math.min(this.scrollMax, next));
+        this.mouse.ref.x = this.mouse.x;
+        this.scrollRef = next;
+      }
+
+      // set new scroll
+      this.el.graph.scrollLeft = next;
+    }
+  }
+
+  onMouseUp(e) {
+    this.mouse.active = false;
+  }
+
+  setTitle(title) {
+    this.el.title.innerHTML = title;
   }
 }
 

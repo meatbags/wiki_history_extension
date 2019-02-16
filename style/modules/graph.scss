@@ -1,0 +1,47 @@
+.graph-wrapper {
+  width: 100%;
+  padding: $space / 2;
+  user-select: none;
+
+  .graph-row {
+    width: 100%;
+    display: flex;
+
+    .graph {
+      height: $height;
+      flex: 1;
+      display: flex;
+      overflow-y: hidden;
+      overflow-x: scroll;
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+      align-items: flex-end;
+      flex-wrap: nowrap;
+      cursor: crosshair;
+
+      .column {
+        width: $graphColumnWidth;
+        flex-shrink: 0;
+        height: 0;
+        background: rgb(255, 200, 200);
+        transition: height 0.4s;
+
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .graph-y-axis {
+      width: $space * 2;
+      height: $height;
+      flex-grow: 0;
+    }
+
+    .graph-x-axis {
+      width: 100%;
+      height: $space * 2;
+      padding-right: $space * 2;
+    }
+  }
+}

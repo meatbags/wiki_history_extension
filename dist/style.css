@@ -14,14 +14,46 @@ body, html {
   .wrapper .wrapper__inner {
     display: flex;
     flex-direction: column;
-    width: 480px;
+    width: 560px;
     text-align: right; }
     .wrapper .wrapper__inner .header {
       white-space: nowrap;
       font-weight: bold; }
-    .wrapper .wrapper__inner .graph {
-      width: 100%;
-      height: 270px; }
     .wrapper .wrapper__inner .calendar {
       width: 100%; }
+
+.graph-wrapper {
+  width: 100%;
+  padding: 5px;
+  user-select: none; }
+  .graph-wrapper .graph-row {
+    width: 100%;
+    display: flex; }
+    .graph-wrapper .graph-row .graph {
+      height: 240px;
+      flex: 1;
+      display: flex;
+      overflow-y: hidden;
+      overflow-x: scroll;
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+      align-items: flex-end;
+      flex-wrap: nowrap;
+      cursor: crosshair; }
+      .graph-wrapper .graph-row .graph .column {
+        width: 10px;
+        flex-shrink: 0;
+        height: 0;
+        background: #ffc8c8;
+        transition: height 0.4s; }
+        .graph-wrapper .graph-row .graph .column:hover {
+          opacity: 0.5; }
+    .graph-wrapper .graph-row .graph-y-axis {
+      width: 20px;
+      height: 240px;
+      flex-grow: 0; }
+    .graph-wrapper .graph-row .graph-x-axis {
+      width: 100%;
+      height: 20px;
+      padding-right: 20px; }
 

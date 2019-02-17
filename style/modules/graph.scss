@@ -17,7 +17,7 @@
 
       .graph__inner {
         height: 100%;
-        display: flex;
+        display: none;
         flex-shrink: 0;
         flex: 1;
         flex-direction: row-reverse;
@@ -26,6 +26,10 @@
         flex-wrap: nowrap;
         background: $graphBackgroundColour;
         cursor: crosshair;
+
+        &.active {
+          display: flex;
+        }
 
         .column {
           width: $graphColumnWidth;

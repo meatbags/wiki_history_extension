@@ -44,7 +44,7 @@ class Time {
     let current = new Date(start);
     const res = [start];
     while (current.getTime() < stop.getTime()) {
-      current.setUTCMonth(current.getUTCMonth() - 1);
+      current.setUTCMonth(current.getUTCMonth() + 1);
       res.push(new Date(current));
     }
     res.push(stop);

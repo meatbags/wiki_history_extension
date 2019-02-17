@@ -1,0 +1,39 @@
+.control {
+  @include padding(0, 0.5);
+  display: flex;
+  cursor: pointer;
+  font-size: $fontSmall;
+  align-items: center;
+
+  .control-label {
+
+  }
+
+  .control-toggle {
+    @include margin(0.5, 0);
+    width: $space * 3;
+    height: $space * 1.5;
+    border-radius: $space;
+    background: $controlBackgroundColour;
+    overflow: hidden;
+
+    .control-toggle-icon {
+      width: $space * 1.5;
+      height: $space * 1.5;
+      border-radius: $space;
+      background: $white;
+      border: $border;
+      box-shadow: 0px 0px 8px rgba($black, 0.75);
+      transition: $transition;
+      transform: translateX(0);
+    }
+  }
+
+  &.active {
+    .control-toggle {
+      .control-toggle-icon {
+        transform: translateX($space * 1.5);
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+::-webkit-scrollbar {
+  width: $scrollBarSize;
+  height: $scrollBarSize;
+}
+
+::-webkit-scrollbar-track {
+  background: $scrollBackgroundColour;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $black;
+}

@@ -9,25 +9,34 @@
 
     .graph {
       height: $height;
-      flex: 1;
+      width: 100%;
       display: flex;
       overflow-y: hidden;
       overflow-x: scroll;
       flex-direction: row-reverse;
-      justify-content: flex-start;
-      align-items: flex-end;
-      flex-wrap: nowrap;
-      cursor: crosshair;
 
-      .column {
-        width: $graphColumnWidth;
+      .graph__inner {
+        height: 100%;
+        display: flex;
         flex-shrink: 0;
-        height: 0;
-        background: rgb(255, 200, 200);
-        transition: height 0.4s;
+        flex: 1;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+        align-items: flex-end;
+        flex-wrap: nowrap;
+        background: $graphBackgroundColour;
+        cursor: crosshair;
 
-        &:hover {
-          opacity: 0.5;
+        .column {
+          width: $graphColumnWidth;
+          flex-shrink: 0;
+          height: 0%;
+          background: $graphColour;
+          transition: height 0.4s;
+
+          &:hover {
+            opacity: 0.5;
+          }
         }
       }
     }
@@ -41,7 +50,12 @@
     .graph-x-axis {
       width: 100%;
       height: $space * 2;
-      padding-right: $space * 2;
+    }
+  }
+
+  .graph-contols {
+    .control {
+
     }
   }
 }

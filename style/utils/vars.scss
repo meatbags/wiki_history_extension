@@ -1,8 +1,21 @@
 // colour
 $colour: #080808;
+$black: #080808;
+$white: #fff;
+$graphColour: rgba(0, 0, 0, 0.5);
+$graphBackgroundColour: #eee;
+$controlBackgroundColour: #ddd;
+$scrollBackgroundColour: #ddd;
 
 // sizing
 $space: 10px;
 $width: 560px;
 $height: 240px;
 $graphColumnWidth: 10px;
+$scrollBarSize: 7px;
+
+// outline
+$border: 1px solid $black;
+
+// animation
+$transition: 0.3s;

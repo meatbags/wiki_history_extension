@@ -3,7 +3,7 @@ div, * {
 }
 
 div {
-  outline: 1px solid rgba(0, 0, 0, 0.125);
+  //outline: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 body, html {
@@ -12,7 +12,10 @@ body, html {
   color: $colour;
 }
 
-body {}
+body {
+  font-family: $fontStack;
+  font-size: $fontSize;
+}
 
 .wrapper {
   padding: $space;

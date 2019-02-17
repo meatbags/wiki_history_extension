@@ -4,15 +4,30 @@
     <meta charset="utf-8" />
     <link rel='stylesheet' href='style.css'>
     <script src='app.min.js'></script>
+    <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
   </head>
   <body>
     <div class='wrapper'>
       <div class='wrapper__inner'>
         <div id='title' class='header'></div>
         <div id='graph-wrapper' class='graph-wrapper'>
+          <div class='graph-row graph-controls'>
+            <div id='toggle-period' class='control'>
+              <div class='control-label'>
+                WEEKS
+              </div>
+              <div class='control-toggle'>
+                <div class='control-toggle-icon'></div>
+              </div>
+              <div class='control-label'>
+                MONTHS
+              </div>
+            </div>
+          </div>
           <div class='graph-row'>
-            <div id='graph' class='graph'></div>
-            <div id='y-axis' class='graph-y-axis'></div>
+            <div id='graph-slider' class='graph'>
+              <div id='graph' class='graph__inner'></div>
+            </div>
           </div>
           <div class='graph-row'>
             <div id='x-axis' class='graph-x-axis'></div>

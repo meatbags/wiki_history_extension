@@ -7,8 +7,10 @@ class View {
     this.mouse = {x: 0, y: 0, ref: {x: 0, y: 0}, active: false};
     this.el = {
       title: document.querySelector('#title'),
-      graph: document.querySelector('#graph'),
       graphWrapper: document.querySelector('#graph-wrapper'),
+      graphSlider: document.querySelector('#graph-slider'),
+      graph: document.querySelector('#graph'),
+      togglePeriod: document.querySelector('#toggle-period'),
     };
 
     // storage
@@ -26,6 +28,9 @@ class View {
     this.el.graph.addEventListener('mousemove', e => { this.onMouseMove(e); });
     this.el.graph.addEventListener('mouseup', e => { this.onMouseUp(e); });
     this.el.graph.addEventListener('mouseleave', e => { this.onMouseUp(e); });
+    this.el.togglePeriod.addEventListener('click', e => {
+      this.el.togglePeriod.classList.toggle('active');
+    });
   }
 
   parseRevisionData(data) {
@@ -40,6 +45,7 @@ class View {
     el.classList.add('column');
     el.dataset.timestamp = timestamp;
     el.dataset.volume = 0;
+    el.style.height = '0%';
     return el;
   }
 
@@ -100,9 +106,17 @@ class View {
 
     // normalise data
     if (this.maxVolume != 0) {
+      let i = 0;
       this.el.graph.querySelectorAll('.column').forEach(el => {
-        const height = parseInt(el.dataset.volume) / this.maxVolume;
-        el.style.height = `${height * 100}%`;
+        const percent = parseInt(el.dataset.volume) / this.maxVolume * 100;
+        if (el.classList.contains('active')) {
+          el.style.height = `${percent}%`;
+        } else {
+          el.classList.add('active');
+          setTimeout(() => {
+            el.style.height = `${percent}%`;
+          }, i++ * 20);
+        }
       });
     }
   }
@@ -113,8 +127,8 @@ class View {
     // set start positions
     this.mouse.ref.x = e.clientX;
     this.mouse.ref.y = e.clientY;
-    this.scrollRef = this.el.graph.scrollLeft;
-    this.scrollMax = this.el.graph.scrollWidth - this.el.graph.clientWidth;
+    this.scrollRef = this.el.graphSlider.scrollLeft;
+    this.scrollMax = this.el.graphSlider.scrollWidth - this.el.graphSlider.clientWidth;
   }
 
   onMouseMove(e) {
@@ -133,7 +147,7 @@ class View {
       }
 
       // set new scroll
-      this.el.graph.scrollLeft = next;
+      this.el.graphSlider.scrollLeft = next;
     }
   }
 

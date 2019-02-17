@@ -1,3 +1,3 @@
 # Wikipedia History Plugin
 
-A Chrome Extension for use with Wikipedia.
+A Chrome Extension for extracting and organising Wikipedia meta-data.

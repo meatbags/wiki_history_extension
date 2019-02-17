@@ -2,12 +2,14 @@
   width: 100%;
   padding: $space / 2;
   user-select: none;
+  position: relative;
 
   .graph-row {
     width: 100%;
     display: flex;
 
-    .graph {
+    .graph-slider {
+      position: relative;
       height: $height;
       width: 100%;
       display: flex;
@@ -15,7 +17,7 @@
       overflow-x: scroll;
       flex-direction: row-reverse;
 
-      .graph__inner {
+      .graph {
         height: 100%;
         display: none;
         flex-shrink: 0;
@@ -48,11 +50,29 @@
 
           &:hover {
             background: $graphBackgroundSelectedColour;
-            
+
             .column__inner {
               background: $graphColumnSelectedColour;
             }
           }
+        }
+      }
+
+      .graph-info {
+        @include padding(0.5, 0.25);
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        pointer-events: none;
+        border: $border;
+        border-radius: $space / 2;
+        background: rgba($white, 0.85);
+        font-size: $fontSmall;
+        text-align: left;
+
+        &.active {
+          opacity: 1;
         }
       }
     }

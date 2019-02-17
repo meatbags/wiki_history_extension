@@ -26,18 +26,20 @@ body {
 .graph-wrapper {
   width: 100%;
   padding: 5px;
-  user-select: none; }
+  user-select: none;
+  position: relative; }
   .graph-wrapper .graph-row {
     width: 100%;
     display: flex; }
-    .graph-wrapper .graph-row .graph {
+    .graph-wrapper .graph-row .graph-slider {
+      position: relative;
       height: 240px;
       width: 100%;
       display: flex;
       overflow-y: hidden;
       overflow-x: scroll;
       flex-direction: row-reverse; }
-      .graph-wrapper .graph-row .graph .graph__inner {
+      .graph-wrapper .graph-row .graph-slider .graph {
         height: 100%;
         display: none;
         flex-shrink: 0;
@@ -48,24 +50,41 @@ body {
         flex-wrap: nowrap;
         background: #eee;
         cursor: crosshair; }
-        .graph-wrapper .graph-row .graph .graph__inner.active {
+        .graph-wrapper .graph-row .graph-slider .graph.active {
           display: flex; }
-        .graph-wrapper .graph-row .graph .graph__inner .column {
+        .graph-wrapper .graph-row .graph-slider .graph .column {
           width: 10px;
           background: #eee;
           flex-shrink: 0;
           height: 100%;
           display: flex;
           align-items: flex-end; }
-          .graph-wrapper .graph-row .graph .graph__inner .column .column__inner {
+          .graph-wrapper .graph-row .graph-slider .graph .column .column__inner {
             width: 100%;
             height: 0%;
             transition: height 0.4s;
             background: #00f; }
-          .graph-wrapper .graph-row .graph .graph__inner .column:hover {
+          .graph-wrapper .graph-row .graph-slider .graph .column:hover {
             background: #ddf; }
-            .graph-wrapper .graph-row .graph .graph__inner .column:hover .column__inner {
+            .graph-wrapper .graph-row .graph-slider .graph .column:hover .column__inner {
               background: #44f; }
+      .graph-wrapper .graph-row .graph-slider .graph-info {
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 2.5px;
+        padding-bottom: 2.5px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        pointer-events: none;
+        border: 1px solid #080808;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.85);
+        font-size: 12px;
+        text-align: left; }
+        .graph-wrapper .graph-row .graph-slider .graph-info.active {
+          opacity: 1; }
     .graph-wrapper .graph-row .graph-y-axis {
       width: 20px;
       height: 240px;

@@ -47,10 +47,13 @@ class View {
 
   createColumn(timestamp) {
     const el = document.createElement('div');
+    const inner = document.createElement('div');
     el.classList.add('column');
     el.dataset.timestamp = timestamp;
     el.dataset.volume = 0;
-    el.style.height = '0%';
+    inner.classList.add('column__inner');
+    inner.style.height = '0%';
+    el.appendChild(inner);
     return el;
   }
 
@@ -65,11 +68,11 @@ class View {
   normaliseColumnHeight(el, maximum, index) {
     const percent = parseInt(el.dataset.volume) / maximum * 100;
     if (el.classList.contains('active')) {
-      el.style.height = `${percent}%`;
+      el.firstChild.style.height = `${percent}%`;
     } else {
       el.classList.add('active');
       setTimeout(() => {
-        el.style.height = `${percent}%`;
+        el.firstChild.style.height = `${percent}%`;
       }, index * 20);
     }
   }

@@ -52,12 +52,20 @@ body {
           display: flex; }
         .graph-wrapper .graph-row .graph .graph__inner .column {
           width: 10px;
+          background: #eee;
           flex-shrink: 0;
-          height: 0%;
-          background: rgba(0, 0, 0, 0.5);
-          transition: height 0.4s; }
+          height: 100%;
+          display: flex;
+          align-items: flex-end; }
+          .graph-wrapper .graph-row .graph .graph__inner .column .column__inner {
+            width: 100%;
+            height: 0%;
+            transition: height 0.4s;
+            background: #00f; }
           .graph-wrapper .graph-row .graph .graph__inner .column:hover {
-            opacity: 0.5; }
+            background: #ddf; }
+            .graph-wrapper .graph-row .graph .graph__inner .column:hover .column__inner {
+              background: #44f; }
     .graph-wrapper .graph-row .graph-y-axis {
       width: 20px;
       height: 240px;

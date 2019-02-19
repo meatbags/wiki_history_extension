@@ -11,8 +11,9 @@ class View {
       graphSlider: document.querySelector('#graph-slider'),
       graphWeekly: document.querySelector('#graph-weekly'),
       graphMonthly: document.querySelector('#graph-monthly'),
-      togglePeriod: document.querySelector('#toggle-period'),
-      info: document.querySelector('#graph-info'),
+      buttonMonth: document.querySelector('#button-monthly'),
+      buttonWeek: document.querySelector('#button-weekly'),
+      graphOutput: document.querySelector('#graph-output'),
     };
     this.el.graphMonthly.classList.add('active');
 
@@ -32,10 +33,19 @@ class View {
     this.el.graphSlider.addEventListener('mousemove', e => { this.onMouseMove(e); });
     this.el.graphSlider.addEventListener('mouseup', e => { this.onMouseUp(e); });
     this.el.graphSlider.addEventListener('mouseleave', e => { this.onMouseLeave(e); });
-    this.el.togglePeriod.addEventListener('click', e => {
-      this.el.togglePeriod.classList.toggle('active');
-      this.el.graphWeekly.classList.toggle('active');
-      this.el.graphMonthly.classList.toggle('active');
+    this.el.buttonMonth.addEventListener('click', e => {
+      this.el.buttonMonth.classList.add('active');
+      this.el.buttonWeek.classList.remove('active');
+      this.el.graphMonthly.classList.add('active');
+      this.el.graphWeekly.classList.remove('active');
+      updateGraphAxis()
+    });
+    this.el.buttonWeek.addEventListener('click', e => {
+      this.el.buttonMonth.classList.remove('active');
+      this.el.buttonWeek.classList.add('active');
+      this.el.graphMonthly.classList.remove('active');
+      this.el.graphWeekly.classList.add('active');
+      updateGraphAxis()
     });
   }
 
@@ -158,6 +168,32 @@ class View {
         this.normaliseColumnHeight(el, this.maxVolume.monthly, i++);
       });
     }
+
+    // update axis
+    this.updateGraphAxis();
+  }
+
+  updateGraphAxis() {
+    // update graph y-axis
+    const axis = this.el.graphWrapper.querySelectorAll('.number');
+
+    if (this.el.graphWeekly.classList.contains('active')) {
+      let a = this.maxVolume.weekly / 3 * 2;
+      let b = this.maxVolume.weekly / 3;
+      a = a % 1 === 0 ? a : Math.round(a * 10) / 10;
+      b = b % 1 === 0 ? b : Math.round(b * 10) / 10;
+      axis[0].innerHTML = this.maxVolume.weekly;
+      axis[1].innerHTML = a;
+      axis[2].innerHTML = b;
+    } else {
+      let a = this.maxVolume.monthly / 3 * 2;
+      let b = this.maxVolume.monthly / 3;
+      a = a % 1 === 0 ? a : Math.round(a * 10) / 10;
+      b = b % 1 === 0 ? b : Math.round(b * 10) / 10;
+      axis[0].innerHTML = this.maxVolume.monthly;
+      axis[1].innerHTML = a;
+      axis[2].innerHTML = b;
+    }
   }
 
   onMouseDown(e) {
@@ -192,23 +228,15 @@ class View {
     }
 
     // update information
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     if (e.target && (e.target.classList.contains('column__inner') || e.target.classList.contains('column'))) {
       const target = e.target.classList.contains('column__inner') ? e.target.parentNode : e.target;
-      const msg = `Edits: ${target.dataset.volume}<br />Users: ${target.dataset.users}`;
-      this.el.info.innerHTML = msg;
-      this.el.info.classList.add('active');
-    } else {
-      this.el.info.classList.remove('active');
+      const date = new Date(target.dataset.timestamp);
+      const dateString = this.el.graphMonthly.classList.contains('active')
+        ? `${months[date.getUTCMonth()]} ${date.getFullYear()}`
+        :  `Week of ${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getFullYear()}`;
+      this.el.graphOutput.innerHTML = `${dateString} Edits: ${target.dataset.volume} Users: ${target.dataset.users}`;
     }
-
-    // set information position
-    const rect = this.el.graphSlider.getBoundingClientRect();
-    let x = this.mouse.x - rect.left;
-    let y = this.mouse.y - rect.top;
-    x += (x <= rect.width - this.el.info.clientWidth * 2) ? 4 : -this.el.info.clientWidth - 4;
-    y += (y <= rect.height - this.el.info.clientHeight * 2) ? 4 : -this.el.info.clientHeight - 4;
-    this.el.info.style.left = `${x}px`;
-    this.el.info.style.top = `${y}px`;
   }
 
   onMouseUp(e) {
@@ -217,7 +245,6 @@ class View {
 
   onMouseLeave() {
     this.mouse.active = false;
-    this.el.info.classList.remove('active');
   }
 
   setTitle(title) {

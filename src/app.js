@@ -48,6 +48,9 @@ class App {
           this.api.getRevisionMeta(evt => {
             this.onRevisionMeta(evt);
           }, res.continue.rvcontinue);
+        } else {
+          const flag = document.querySelector('#retrieving-data-flag');
+          flag.parentNode.removeChild(flag);
         }
       });
     } else {

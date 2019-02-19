@@ -16,23 +16,3 @@ body {
   font-family: $fontStack;
   font-size: $fontSize;
 }
-
-.wrapper {
-  padding: $space;
-
-  .wrapper__inner {
-    display: flex;
-    flex-direction: column;
-    width: $width;
-    text-align: right;
-
-    .header {
-      white-space: nowrap;
-      font-weight: bold;
-    }
-
-    .calendar {
-      width: 100%;
-    }
-  }
-}

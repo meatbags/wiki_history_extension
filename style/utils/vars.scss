@@ -2,18 +2,21 @@
 $colour: #080808;
 $black: #080808;
 $white: #fff;
-$graphColumnColour: #00f;
+$grey: #888;
+$lightGrey: #ccc;
+$graphColumnColour: #22f;
 $graphColumnSelectedColour: #44f;
-$graphBackgroundColour: #eee;
-$graphBackgroundSelectedColour: #ddf;
+$graphBackgroundColour: #fff;
+$graphColumnBackgroundColour: #eee;
+$graphBackgroundSelectedColour: #ccf;
 $controlBackgroundColour: #ddd;
 $scrollBackgroundColour: #ddd;
 
 // sizing
 $space: 10px;
-$width: 560px;
+$width: 500px;
 $height: 240px;
-$graphColumnWidth: 10px;
+$graphColumnWidth: 8px;
 $scrollBarSize: 7px;
 
 // outline
@@ -21,3 +24,7 @@ $border: 1px solid $black;
 
 // animation
 $transition: 0.3s;
+
+// style
+$border: 1px solid $grey;
+$borderDashed: 1px dashed rgba($black, 0.5);

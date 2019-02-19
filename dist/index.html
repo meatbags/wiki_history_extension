@@ -12,30 +12,34 @@
         <div id='title' class='header'></div>
         <div id='graph-wrapper' class='graph-wrapper'>
           <div class='graph-row graph-controls'>
-            <div id='toggle-period' class='control'>
-              <div class='control-label'>
-                Monthly
-              </div>
-              <div class='control-toggle'>
-                <div class='control-toggle-icon'></div>
-              </div>
-              <div class='control-label'>
-                Weekly
-              </div>
-            </div>
+            <div id='button-monthly' class='control active'>Month</div>
+            <div id='button-weekly' class='control'>Week</div>
+            <div id='graph-output' class='graph-output'></div>
           </div>
           <div class='graph-row'>
             <div id='graph-slider' class='graph-slider'>
               <div id='graph-monthly' class='graph active'></div>
               <div id='graph-weekly' class='graph'></div>
-              <div id='graph-info' class='graph-info'></div>
+            </div>
+            <div class='graph-overlay'>
+              <div class='graph-overlay__third'>
+                <div class='number'>0</div>
+              </div>
+              <div class='graph-overlay__third'>
+                <div class='number'>0</div>
+              </div>
+              <div class='graph-overlay__third'>
+                <div class='number'>0</div>
+              </div>
+              <div id='retrieving-data-flag'>
+                Retrieving data...
+              </div>
             </div>
           </div>
           <div class='graph-row'>
             <div id='x-axis' class='graph-x-axis'></div>
           </div>
         </div>
-        <div id='calendar'></div>
       </div>
     </div>
   </body>

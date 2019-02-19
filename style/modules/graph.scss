@@ -1,12 +1,12 @@
 .graph-wrapper {
   width: 100%;
-  padding: $space / 2;
   user-select: none;
   position: relative;
 
   .graph-row {
     width: 100%;
     display: flex;
+    position: relative;
 
     .graph-slider {
       position: relative;
@@ -35,7 +35,7 @@
 
         .column {
           width: $graphColumnWidth;
-          background: $graphBackgroundColour;
+          background: $graphColumnBackgroundColour;
           flex-shrink: 0;
           height: 100%;
           display: flex;
@@ -57,41 +57,71 @@
           }
         }
       }
-
-      .graph-info {
-        @include padding(0.5, 0.25);
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        pointer-events: none;
-        border: $border;
-        border-radius: $space / 2;
-        background: rgba($white, 0.85);
-        font-size: $fontSmall;
-        text-align: left;
-
-        &.active {
-          opacity: 1;
-        }
-      }
-    }
-
-    .graph-y-axis {
-      width: $space * 2;
-      height: $height;
-      flex-grow: 0;
     }
 
     .graph-x-axis {
       width: 100%;
       height: $space * 2;
     }
+
+    .graph-overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      pointer-events: none;
+
+      .graph-overlay__third {
+        width: 100%;
+        height: 33.333%;
+        border-bottom: $borderDashed;
+        position: relative;
+
+        .number {
+          @include padding(0.25, 0.125);
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-size: $fontTiny;
+        }
+
+        &:nth-of-type(3) {
+          border-bottom: none;
+        }
+      }
+
+      #retrieving-data-flag {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: $fontTiny;
+        @include padding(0.25, 0.125);
+        @include margin(0.5, 0.5);
+        background: $white;
+      }
+    }
   }
 
-  .graph-contols {
-    .control {
+  .graph-controls {
+    font-size: $fontSmall;
+    padding-top: $space / 2;
 
+    .control {
+      padding: $space;
+      margin-right: $space / 2;
+      border-top-right-radius: $space / 2;
+      border-top-left-radius: $space / 2;
+
+      &.active {
+        background-color: $lightGrey;
+      }
+    }
+
+    .graph-output {
+      flex: 1;
+      text-align: right;
+      @include padding(0, 1);
     }
   }
 }
